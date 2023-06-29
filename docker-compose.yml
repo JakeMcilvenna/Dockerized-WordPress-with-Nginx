@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  db:
+    image: mariadb:10
+    container_name: sage-db
+    environment:
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+
+  wordpress:
+    image: wordpress:php8.1-fpm-alpine
+    container_name: sage-wp
+    volumes:
+      - ./wp_files:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: "${WORDPRESS_DB_NAME}"
+      WORDPRESS_DB_USER: "${WORDPRESS_DB_USER}"
+      WORDPRESS_DB_PASSWORD: "${WORDPRESS_DB_PASSWORD}"
+  
+  nginx:
+    image: nginx:alpine
+    container_name: sage-nginx
+    depends_on:
+      - wordpress
+    ports:
+      - 8085:80
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+      - ./wp_files:/var/www/html
