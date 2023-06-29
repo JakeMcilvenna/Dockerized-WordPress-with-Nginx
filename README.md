@@ -32,12 +32,14 @@ WORDPRESS_DB_USER=wpuser
 WORDPRESS_DB_PASSWORD=wppassword
 ```
 Customize the values according to your needs.
+
 4. Open a terminal or command prompt and navigate to the project directory.
 5. Run the following command to start the containers:
 ```
 docker-compose up -d
 ```
 This command will create and start the Docker containers based on the provided configuration.
+
 6. Wait for the containers to start. Once they are up and running, you can access your WordPress site by opening a web browser and navigating to http://localhost:8085.
 
 ### Configuration
